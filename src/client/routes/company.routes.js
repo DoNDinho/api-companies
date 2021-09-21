@@ -1,5 +1,6 @@
 const express = require('express')
 const insertCompanyService = require('../../business/services/insertCompany.service')
+const listCompanyService = require('../../business/services/listCompanies.service')
 const router = express.Router()
 const { basePath } = require('../../business/utils/configs/api.config')
 const authMiddleware = require('../middlewares/authentication/authentication.middleware')
@@ -22,5 +23,18 @@ router.post(
 		}
 	}
 )
+
+router.get(`${basePath}/v1/companies`, [authMiddleware, headersValidation], async (req, res, next) => {
+	try {
+		// TODO Colocar funcion de traceRequest
+		const transactionId = req.headers['transaction-id']
+		logger.addContext('transaction_id', transactionId)
+		const response = await listCompanyService.execute()
+		logger.info(JSON.stringify({ message: 'Lista de empresas obtenidas', data: response }))
+		res.json(response)
+	} catch (error) {
+		next(error)
+	}
+})
 
 module.exports = router

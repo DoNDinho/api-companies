@@ -8,6 +8,10 @@ class Runner {
 	async runProcedure(procedure) {
 		return await this.strategy.runProcedure(procedure)
 	}
+
+	async runCursorProcedure(procedure) {
+		return await this.strategy.runCursorProcedure(procedure)
+	}
 }
 
 module.exports = Runner
