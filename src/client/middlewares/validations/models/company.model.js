@@ -1,4 +1,4 @@
-const loginSchema = {
+const companySchema = {
 	type: 'object',
 	properties: {
 		data: {
@@ -33,7 +33,7 @@ const loginSchema = {
 						},
 						phone: {
 							type: 'integer',
-							minimum: 10
+							minimum: 8
 						}
 					},
 					required: ['name', 'email', 'phone']
@@ -59,4 +59,4 @@ const loginSchema = {
 	required: ['data']
 }
 
-module.exports = loginSchema
+module.exports = companySchema

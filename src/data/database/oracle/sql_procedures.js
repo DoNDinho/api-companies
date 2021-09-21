@@ -48,4 +48,27 @@ const getCompanyById = (id) => {
 	}
 }
 
-module.exports = { insertCompany, getListCompanies, getCompanyById }
+const updateCompany = (id, company) => {
+	const { number, validator } = company.company_identification
+	const { name, email, phone } = company.company_data
+	const { city, street } = company.company_address
+
+	return {
+		name: 'SP_MODIFICAR_EMPRESA',
+		statement: `BEGIN SP_MODIFICAR_EMPRESA(:P_ID_EMPRESA, :P_RUT_EMPRESA, :P_DV_RUT, :P_NOMBRE_EMPRESA, :P_EMAIL_EMPRESA, :P_TELEFONO_EMPRESA, :P_CIUDAD, :P_DIRECCION, :P_CODIGO, :P_MENSAJE); END;`,
+		bind: {
+			P_ID_EMPRESA: { val: parseInt(id), type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
+			P_RUT_EMPRESA: { val: number, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_DV_RUT: { val: validator, type: oracledb.DB_TYPE_CHAR, dir: oracledb.BIND_INOUT },
+			P_NOMBRE_EMPRESA: { val: name, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_EMAIL_EMPRESA: { val: email, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_TELEFONO_EMPRESA: { val: phone, type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
+			P_CIUDAD: { val: city, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_DIRECCION: { val: street, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_CODIGO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_MENSAJE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT }
+		}
+	}
+}
+
+module.exports = { insertCompany, getListCompanies, getCompanyById, updateCompany }

@@ -1,13 +1,13 @@
 'use strict'
 const express = require('express')
-const insertCompanyValidation = express.Router()
+const companyValidation = express.Router()
 const Ajv = require('ajv')
-const insertCompanySchema = require('./models/insertCompany.model')
+const companySchema = require('./models/company.model')
 
-insertCompanyValidation.use((req, res, next) => {
+companyValidation.use((req, res, next) => {
 	const data = req.body
 	const ajv = new Ajv()
-	const validate = ajv.compile(insertCompanySchema)
+	const validate = ajv.compile(companySchema)
 	const valid = validate(data)
 
 	logger.info('Validando request de la solicitud')
@@ -23,4 +23,4 @@ insertCompanyValidation.use((req, res, next) => {
 	}
 })
 
-module.exports = insertCompanyValidation
+module.exports = companyValidation
