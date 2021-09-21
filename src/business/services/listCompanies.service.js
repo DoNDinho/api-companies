@@ -1,11 +1,11 @@
 'use strict'
 const companiesRepository = require('../../data/repository/companies.repository')
-const listCompanyConverter = require('../converter/listCompanies.converter')
+const companyConverter = require('../converter/company.converter')
 
 const execute = async () => {
 	try {
 		const listCompanies = await getListCompanies()
-		return await listCompanyConverter.parseListCompanyResponse(listCompanies)
+		return await Promise.all(listCompanies.map((company) => companyConverter.parseCompanyResponse(company)))
 	} catch (error) {
 		throw error
 	}

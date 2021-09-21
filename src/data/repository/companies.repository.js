@@ -24,4 +24,15 @@ const getListCompanies = async () => {
 	}
 }
 
-module.exports = { insertCompany, getListCompanies }
+const getCompanyById = async (id) => {
+	try {
+		const database = new Runner()
+		const procedure = sqlProcedures.getCompanyById(id)
+		const result = await database.runProcedure(procedure)
+		return result.outBinds
+	} catch (error) {
+		throw error
+	}
+}
+
+module.exports = { insertCompany, getListCompanies, getCompanyById }

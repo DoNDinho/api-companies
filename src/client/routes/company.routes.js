@@ -1,6 +1,7 @@
 const express = require('express')
 const insertCompanyService = require('../../business/services/insertCompany.service')
 const listCompanyService = require('../../business/services/listCompanies.service')
+const getCompanyService = require('../../business/services/getCompanyById.service')
 const router = express.Router()
 const { basePath } = require('../../business/utils/configs/api.config')
 const authMiddleware = require('../middlewares/authentication/authentication.middleware')
@@ -17,7 +18,7 @@ router.post(
 			logger.addContext('transaction_id', transactionId)
 			const response = await insertCompanyService.execute(req.body.data)
 			logger.info(JSON.stringify({ message: 'Empresa insertada correctamente', data: response }))
-			res.status(201).json(response)
+			res.status(201).json({ data: response })
 		} catch (error) {
 			next(error)
 		}
@@ -31,7 +32,19 @@ router.get(`${basePath}/v1/companies`, [authMiddleware, headersValidation], asyn
 		logger.addContext('transaction_id', transactionId)
 		const response = await listCompanyService.execute()
 		logger.info(JSON.stringify({ message: 'Lista de empresas obtenidas', data: response }))
-		res.json(response)
+		res.json({ data: response })
+	} catch (error) {
+		next(error)
+	}
+})
+
+router.get(`${basePath}/v1/companies/:id`, [authMiddleware, headersValidation], async (req, res, next) => {
+	try {
+		const transactionId = req.headers['transaction-id']
+		logger.addContext('transaction_id', transactionId)
+		const response = await getCompanyService.execute(req.params.id)
+		logger.info(JSON.stringify({ message: 'Empresa obtenida', data: response }))
+		res.json({ data: response })
 	} catch (error) {
 		next(error)
 	}
