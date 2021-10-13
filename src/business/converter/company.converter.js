@@ -1,21 +1,25 @@
-'use strict'
+'use strict';
 const parseCompanyResponse = (company) => {
 	return {
 		id: company.ID_EMPRESA || company.P_ID_EMPRESA,
 		company_identification: {
-			number: company.RUT_EMPRESA || company.P_RUT_EMPRESA,
-			validator: company.DV_RUT || company.P_DV_RUT.trim()
+			number: company.RUT || company.P_RUT,
+			validator: company.DV || company.P_DV.trim()
 		},
 		company_data: {
-			name: company.NOMBRE_EMPRESA || company.P_NOMBRE_EMPRESA,
-			email: company.EMAIL_EMPRESA || company.P_EMAIL_EMPRESA,
-			phone: company.TELEFONO_EMPRESA || company.P_TELEFONO_EMPRESA
+			name: company.NOMBRE || company.P_NOMBRE,
+			email: company.EMAIL || company.P_EMAIL,
+			phone: company.TELEFONO || company.P_TELEFONO
 		},
 		company_address: {
-			city: company.CIUDAD || company.P_CIUDAD,
-			street: company.DIRECCION || company.P_DIRECCION
+			street: company.DIRECCION || company.P_DIRECCION,
+			number: company.NUM_CALLE || company.P_NUM_CALLE,
+			commune: {
+				code: company.ID_COMUNA || company.P_ID_COMUNA,
+				description: company.DESCRIPCION || company.P_DESCRIPCION
+			}
 		}
-	}
-}
+	};
+};
 
-module.exports = { parseCompanyResponse }
+module.exports = { parseCompanyResponse };
