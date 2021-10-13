@@ -1,42 +1,49 @@
-'use strict'
-const companiesRepository = require('../../data/repository/companies.repository')
-const companyConverter = require('../converter/company.converter')
-const { validateRut } = require('../utils/validateRut')
+'use strict';
+const companiesRepository = require('../../data/repository/companies.repository');
+const companyConverter = require('../converter/company.converter');
+const { validateRut } = require('../utils/validateRut');
 
 const execute = async (id, data) => {
 	try {
-		validateRut(data.company_identification.number, data.company_identification.validator)
-		const companyData = await updateCompany(id, data)
-		return companyConverter.parseCompanyResponse(companyData)
+		validateRut(
+			data.company.company_identification.number,
+			data.company.company_identification.validator
+		);
+		const companyData = await updateCompany(id, data);
+		return companyConverter.parseCompanyResponse(companyData);
 	} catch (error) {
-		throw error
+		throw error;
 	}
-}
+};
 
 const updateCompany = async (id, data) => {
 	try {
-		const result = await companiesRepository.updateCompany(id, data)
-		logger.info('RESULT: ', JSON.stringify(result))
+		const result = await companiesRepository.updateCompany(id, data.company);
+		logger.info('RESULT: ', JSON.stringify(result));
 
-		logger.info('Validando actuaslizacion de empresa')
+		logger.info('Validando actualizacion de empresa');
 
 		switch (result.P_CODIGO) {
 			case '000':
-				return result
+				return result;
 			case '001':
-				throw { httpCode: 404, code: result.P_CODIGO, message: result.P_MENSAJE }
+				throw { httpCode: 404, code: result.P_CODIGO, message: result.P_MENSAJE };
 			case '-1':
-				throw { httpCode: 422, code: result.P_CODIGO, message: 'No puede actualizar empresa. Datos duplicados' }
+				throw {
+					httpCode: 422,
+					code: result.P_CODIGO,
+					message: 'No puede actualizar empresa. Datos duplicados'
+				};
 			default:
 				throw {
 					httpCode: 422,
 					code: result.P_CODIGO,
 					message: 'No puede actualizar empresa. Consulte con el administrador'
-				}
+				};
 		}
 	} catch (error) {
-		throw error
+		throw error;
 	}
-}
+};
 
-module.exports = { execute }
+module.exports = { execute };

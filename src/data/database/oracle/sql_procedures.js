@@ -54,20 +54,22 @@ const getCompanyById = (id) => {
 const updateCompany = (id, company) => {
 	const { number, validator } = company.company_identification;
 	const { name, email, phone } = company.company_data;
-	const { city, street } = company.company_address;
+	const { street, number: numberStreet } = company.company_address;
+	const { code } = company.company_address.commune;
 
 	return {
 		name: 'SP_MODIFICAR_EMPRESA',
-		statement: `BEGIN SP_MODIFICAR_EMPRESA(:P_ID_EMPRESA, :P_RUT_EMPRESA, :P_DV_RUT, :P_NOMBRE_EMPRESA, :P_EMAIL_EMPRESA, :P_TELEFONO_EMPRESA, :P_CIUDAD, :P_DIRECCION, :P_CODIGO, :P_MENSAJE); END;`,
+		statement: `BEGIN SP_MODIFICAR_EMPRESA(:P_ID_EMPRESA, :P_RUT, :P_DV, :P_NOMBRE, :P_EMAIL, :P_TELEFONO, :P_DIRECCION, :P_NUM_CALLE, :P_ID_COMUNA, :P_CODIGO, :P_MENSAJE); END;`,
 		bind: {
 			P_ID_EMPRESA: { val: parseInt(id), type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
-			P_RUT_EMPRESA: { val: number, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
-			P_DV_RUT: { val: validator, type: oracledb.DB_TYPE_CHAR, dir: oracledb.BIND_INOUT },
-			P_NOMBRE_EMPRESA: { val: name, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
-			P_EMAIL_EMPRESA: { val: email, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
-			P_TELEFONO_EMPRESA: { val: phone, type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
-			P_CIUDAD: { val: city, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_RUT: { val: number, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_DV: { val: validator, type: oracledb.DB_TYPE_CHAR, dir: oracledb.BIND_INOUT },
+			P_NOMBRE: { val: name, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_EMAIL: { val: email, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_TELEFONO: { val: phone, type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
 			P_DIRECCION: { val: street, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_NUM_CALLE: { val: numberStreet, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
+			P_ID_COMUNA: { val: parseInt(code), type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
 			P_CODIGO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
 			P_MENSAJE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT }
 		}
