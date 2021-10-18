@@ -16,8 +16,13 @@ const parseCompanyResponse = (company) => {
 			number: company.NUM_CALLE || company.P_NUM_CALLE,
 			commune: {
 				code: company.ID_COMUNA || company.P_ID_COMUNA,
-				description: company.DESCRIPCION || company.P_DESCRIPCION
+				description: company.DESCRIPCION_COMUNA || company.P_DESCRIPCION_COMUNA
 			}
+		},
+		company_category: {
+			code: company.ID_RUBRO || company.P_ID_RUBRO,
+			description: company.DESCRIPCION_RUBRO || company.P_DESCRIPCION_RUBRO,
+			amount: company.MONTO_RUBRO || company.P_MONTO_RUBRO
 		}
 	};
 };
