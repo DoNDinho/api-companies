@@ -33,7 +33,7 @@ const getListCompanies = () => {
 const getCompanyById = (id) => {
 	return {
 		name: 'SP_LISTAR_EMPRESA_POR_ID',
-		statement: `BEGIN SP_LISTAR_EMPRESA_POR_ID(:P_ID_EMPRESA, :P_RUT, :P_DV, :P_NOMBRE, :P_EMAIL, :P_TELEFONO, :P_DIRECCION, :P_NUM_CALLE, :P_ID_COMUNA, :P_DESCRIPCION, :P_CODIGO, :P_MENSAJE); END;`,
+		statement: `BEGIN SP_LISTAR_EMPRESA_POR_ID(:P_ID_EMPRESA, :P_RUT, :P_DV, :P_NOMBRE, :P_EMAIL, :P_TELEFONO, :P_DIRECCION, :P_NUM_CALLE, :P_ID_COMUNA, :P_DESCRIPCION_COMUNA, :P_ID_RUBRO, :P_DESCRIPCION_RUBRO, :P_MONTO_RUBRO, :P_CODIGO, :P_MENSAJE); END;`,
 		bind: {
 			P_ID_EMPRESA: { val: parseInt(id), type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
 			P_RUT: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
@@ -44,7 +44,10 @@ const getCompanyById = (id) => {
 			P_DIRECCION: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
 			P_NUM_CALLE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
 			P_ID_COMUNA: { type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_OUT },
-			P_DESCRIPCION: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_DESCRIPCION_COMUNA: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_ID_RUBRO: { type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_OUT },
+			P_DESCRIPCION_RUBRO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_MONTO_RUBRO: { type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_OUT },
 			P_CODIGO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
 			P_MENSAJE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT }
 		}
