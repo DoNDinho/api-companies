@@ -65,9 +65,19 @@ const companySchema = {
 								}
 							},
 							required: ['street', 'number', 'commune']
+						},
+						company_category: {
+							type: 'object',
+							properties: {
+								code: {
+									type: 'integer',
+									minimum: 1
+								}
+							},
+							required: ['code']
 						}
 					},
-					required: ['company_identification', 'company_data', 'company_address']
+					required: ['company_identification', 'company_data', 'company_address', 'company_category']
 				}
 			},
 			required: ['company']

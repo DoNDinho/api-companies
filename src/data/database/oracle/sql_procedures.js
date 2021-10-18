@@ -6,10 +6,11 @@ const insertCompany = (company) => {
 	const { name, email, phone } = company.company_data;
 	const { street, number: numberStreet } = company.company_address;
 	const { code } = company.company_address.commune;
+	const { code: codeCategory } = company.company_category;
 
 	return {
 		name: 'SP_INSERTAR_EMPRESA',
-		statement: `BEGIN SP_INSERTAR_EMPRESA('${number}','${validator}','${name}','${email}', ${phone},'${street}', '${numberStreet}', ${code}, :P_CODIGO, :P_MENSAJE); END;`,
+		statement: `BEGIN SP_INSERTAR_EMPRESA('${number}','${validator}','${name}','${email}', ${phone},'${street}', '${numberStreet}', ${code}, ${codeCategory}, :P_CODIGO, :P_MENSAJE); END;`,
 		bind: {
 			P_CODIGO: { dir: oracledb.BIND_OUT },
 			P_MENSAJE: { dir: oracledb.BIND_OUT }
@@ -59,10 +60,11 @@ const updateCompany = (id, company) => {
 	const { name, email, phone } = company.company_data;
 	const { street, number: numberStreet } = company.company_address;
 	const { code } = company.company_address.commune;
+	const { code: codeCategory } = company.company_category;
 
 	return {
 		name: 'SP_MODIFICAR_EMPRESA',
-		statement: `BEGIN SP_MODIFICAR_EMPRESA(:P_ID_EMPRESA, :P_RUT, :P_DV, :P_NOMBRE, :P_EMAIL, :P_TELEFONO, :P_DIRECCION, :P_NUM_CALLE, :P_ID_COMUNA, :P_CODIGO, :P_MENSAJE); END;`,
+		statement: `BEGIN SP_MODIFICAR_EMPRESA(:P_ID_EMPRESA, :P_RUT, :P_DV, :P_NOMBRE, :P_EMAIL, :P_TELEFONO, :P_DIRECCION, :P_NUM_CALLE, :P_ID_COMUNA, :P_ID_RUBRO, :P_CODIGO, :P_MENSAJE); END;`,
 		bind: {
 			P_ID_EMPRESA: { val: parseInt(id), type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
 			P_RUT: { val: number, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
@@ -73,6 +75,7 @@ const updateCompany = (id, company) => {
 			P_DIRECCION: { val: street, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
 			P_NUM_CALLE: { val: numberStreet, type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_INOUT },
 			P_ID_COMUNA: { val: parseInt(code), type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
+			P_ID_RUBRO: { val: codeCategory, type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_INOUT },
 			P_CODIGO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
 			P_MENSAJE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT }
 		}
