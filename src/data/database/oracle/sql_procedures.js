@@ -95,4 +95,40 @@ const getCategories = () => {
 	};
 };
 
-module.exports = { insertCompany, getListCompanies, getCompanyById, updateCompany, getCategories };
+const getContractById = (idContract, idCompany) => {
+	return {
+		name: 'SP_LISTAR_CONTRATO_POR_ID',
+		statement: `BEGIN SP_LISTAR_CONTRATO_POR_ID(:P_ID_CONTRATO, :P_ID_EMPRESA, :P_NOMBRE, :P_FECHAINICIO, :P_FECHATERMINO, :P_FECHAPAGO, :P_DESCRIPCION, :P_ID_ESTADO, :P_DESCRIPCION_ESTADO_CONTRATO, :P_MONTOBASE, :P_CODIGO, :P_MENSAJE); END;`,
+		bind: {
+			P_ID_CONTRATO: {
+				val: parseInt(idContract),
+				type: oracledb.DB_TYPE_NUMBER,
+				dir: oracledb.BIND_INOUT
+			},
+			P_ID_EMPRESA: {
+				val: parseInt(idCompany),
+				type: oracledb.DB_TYPE_NUMBER,
+				dir: oracledb.BIND_INOUT
+			},
+			P_NOMBRE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_FECHAINICIO: { type: oracledb.DB_TYPE_DATE, dir: oracledb.BIND_OUT },
+			P_FECHATERMINO: { type: oracledb.DB_TYPE_DATE, dir: oracledb.BIND_OUT },
+			P_FECHAPAGO: { type: oracledb.DB_TYPE_DATE, dir: oracledb.BIND_OUT },
+			P_DESCRIPCION: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_ID_ESTADO: { type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_OUT },
+			P_DESCRIPCION_ESTADO_CONTRATO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_MONTOBASE: { type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_OUT },
+			P_CODIGO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_MENSAJE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT }
+		}
+	};
+};
+
+module.exports = {
+	insertCompany,
+	getListCompanies,
+	getCompanyById,
+	updateCompany,
+	getCategories,
+	getContractById
+};
