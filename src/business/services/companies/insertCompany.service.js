@@ -1,7 +1,7 @@
 'use strict';
-const companiesRepository = require('../../data/repository/companies.repository');
-const logger = require('../utils/configs/log4js.config');
-const { validateRut } = require('../utils/validateRut');
+const companiesRepository = require('../../../data/repository/companies.repository');
+const logger = require('../../utils/configs/log4js.config');
+const { validateRut } = require('../../utils/validateRut');
 
 const execute = async (data) => {
 	try {

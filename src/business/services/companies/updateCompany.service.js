@@ -1,7 +1,7 @@
 'use strict';
-const companiesRepository = require('../../data/repository/companies.repository');
-const companyConverter = require('../converter/company.converter');
-const { validateRut } = require('../utils/validateRut');
+const companiesRepository = require('../../../data/repository/companies.repository');
+const companyConverter = require('../../converter/company.converter');
+const { validateRut } = require('../../utils/validateRut');
 
 const execute = async (id, data) => {
 	try {
