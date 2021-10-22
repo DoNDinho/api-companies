@@ -1,8 +1,8 @@
 const express = require('express');
-const insertCompanyService = require('../../business/services/insertCompany.service');
-const listCompanyService = require('../../business/services/listCompanies.service');
-const getCompanyService = require('../../business/services/getCompanyById.service');
-const updateCompanyService = require('../../business/services/updateCompany.service');
+const insertCompanyService = require('../../business/services/companies/insertCompany.service');
+const listCompanyService = require('../../business/services/companies/listCompanies.service');
+const getCompanyService = require('../../business/services/companies/getCompanyById.service');
+const updateCompanyService = require('../../business/services/companies/updateCompany.service');
 const router = express.Router();
 const { basePath } = require('../../business/utils/configs/api.config');
 const authMiddleware = require('../middlewares/authentication/authentication.middleware');
