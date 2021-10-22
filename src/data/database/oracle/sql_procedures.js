@@ -124,11 +124,30 @@ const getContractById = (idContract, idCompany) => {
 	};
 };
 
+const getContracts = (idCompany) => {
+	return {
+		name: 'SP_LISTAR_CONTRATOS_EMPRESA',
+		statement: `BEGIN SP_LISTAR_CONTRATOS_EMPRESA(:P_ID_EMPRESA, :P_RECORDSET, :P_COUNT, :P_CODIGO, :P_MENSAJE); END;`,
+		bind: {
+			P_ID_EMPRESA: {
+				val: parseInt(idCompany),
+				type: oracledb.DB_TYPE_NUMBER,
+				dir: oracledb.BIND_INOUT
+			},
+			P_RECORDSET: { type: oracledb.DB_TYPE_CURSOR, dir: oracledb.BIND_OUT },
+			P_COUNT: { type: oracledb.DB_TYPE_NUMBER, dir: oracledb.BIND_OUT },
+			P_CODIGO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_MENSAJE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT }
+		}
+	};
+};
+
 module.exports = {
 	insertCompany,
 	getListCompanies,
 	getCompanyById,
 	updateCompany,
 	getCategories,
-	getContractById
+	getContractById,
+	getContracts
 };

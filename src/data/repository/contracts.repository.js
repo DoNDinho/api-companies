@@ -2,10 +2,10 @@
 const Runner = require('../database/oracle/runner/runner');
 const sqlProcedures = require('../database/oracle/sql_procedures');
 
-const getContracts = async () => {
+const getContracts = async (idCompany) => {
 	try {
 		const database = new Runner();
-		const procedure = sqlProcedures.getListCompanies();
+		const procedure = sqlProcedures.getContracts(idCompany);
 		const result = await database.runCursorProcedure(procedure);
 		return result;
 	} catch (error) {
