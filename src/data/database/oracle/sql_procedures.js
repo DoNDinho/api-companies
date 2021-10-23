@@ -95,6 +95,20 @@ const getCategories = () => {
 	};
 };
 
+const insertContract = (contract) => {
+	const idCompany = contract.company.code;
+	const { init_date, payment_date, description, period } = contract;
+
+	return {
+		name: 'SP_INSERTAR_CONTRATO',
+		statement: `BEGIN SP_INSERTAR_CONTRATO('${idCompany}','${init_date}','${payment_date}','${description}', ${period}, :P_CODIGO, :P_MENSAJE); END;`,
+		bind: {
+			P_CODIGO: { dir: oracledb.BIND_OUT },
+			P_MENSAJE: { dir: oracledb.BIND_OUT }
+		}
+	};
+};
+
 const getContractById = (idContract, idCompany) => {
 	return {
 		name: 'SP_LISTAR_CONTRATO_POR_ID',
@@ -148,6 +162,7 @@ module.exports = {
 	getCompanyById,
 	updateCompany,
 	getCategories,
+	insertContract,
 	getContractById,
 	getContracts
 };

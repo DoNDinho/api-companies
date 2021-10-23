@@ -2,6 +2,17 @@
 const Runner = require('../database/oracle/runner/runner');
 const sqlProcedures = require('../database/oracle/sql_procedures');
 
+const insertContract = async (contract) => {
+	try {
+		const database = new Runner();
+		const procedure = sqlProcedures.insertContract(contract);
+		const result = await database.runProcedure(procedure);
+		return result.outBinds;
+	} catch (error) {
+		throw error;
+	}
+};
+
 const getContracts = async (idCompany) => {
 	try {
 		const database = new Runner();
@@ -24,4 +35,4 @@ const getContractById = async (idContract, idCompany) => {
 	}
 };
 
-module.exports = { getContracts, getContractById };
+module.exports = { insertContract, getContracts, getContractById };
