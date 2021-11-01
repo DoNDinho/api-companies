@@ -1,3 +1,5 @@
+const { formatDate } = require('../utils/date');
+
 const paymentConverter = (payment) => {
 	return {
 		id: payment.ID_PAGO,
@@ -7,8 +9,8 @@ const paymentConverter = (payment) => {
 		total_amount: {
 			amount: payment.TOTALPAGAR
 		},
-		payment_date: payment.FECHAPAGO,
-		expiration_date: payment.FECHAVENCIMIENTO,
+		payment_date: formatDate(payment.FECHAPAGO),
+		expiration_date: formatDate(payment.FECHAVENCIMIENTO),
 		state: {
 			code: payment.ID_ESTADO_PAGO,
 			description: payment.DESCRIPCION_PAGO
