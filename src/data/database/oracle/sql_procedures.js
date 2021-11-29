@@ -174,6 +174,34 @@ const getPayments = (idCompany) => {
 	};
 };
 
+const insertChecklist = (idContract, description) => {
+	return {
+		name: 'SP_INSERTAR_CHECKLIST',
+		statement: `BEGIN SP_INSERTAR_CHECKLIST(${idContract}, '${description}', :P_CODIGO, :P_MENSAJE); END;`,
+		bind: {
+			P_CODIGO: { dir: oracledb.BIND_OUT },
+			P_MENSAJE: { dir: oracledb.BIND_OUT }
+		}
+	};
+};
+
+const getChecklists = (idContract) => {
+	return {
+		name: 'SP_LISTAR_CHECKLIST',
+		statement: `BEGIN SP_LISTAR_CHECKLIST(:P_ID_CONTRATO, :P_RECORDSET, :P_CODIGO, :P_MENSAJE); END;`,
+		bind: {
+			P_ID_CONTRATO: {
+				val: parseInt(idContract),
+				type: oracledb.DB_TYPE_NUMBER,
+				dir: oracledb.BIND_IN
+			},
+			P_RECORDSET: { type: oracledb.DB_TYPE_CURSOR, dir: oracledb.BIND_OUT },
+			P_CODIGO: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT },
+			P_MENSAJE: { type: oracledb.DB_TYPE_VARCHAR, dir: oracledb.BIND_OUT }
+		}
+	};
+};
+
 module.exports = {
 	insertCompany,
 	getListCompanies,
@@ -183,5 +211,7 @@ module.exports = {
 	insertContract,
 	getContractById,
 	getContracts,
-	getPayments
+	getPayments,
+	insertChecklist,
+	getChecklists
 };

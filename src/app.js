@@ -13,6 +13,7 @@ const companyRoutes = require('./client/routes/company.routes');
 const categoryRoutes = require('./client/routes/category.routes');
 const contractRoutes = require('./client/routes/contract.routes');
 const paymentRoutes = require('./client/routes/payment.routes');
+const checklistRoutes = require('./client/routes/checklist.routes');
 const { errorHandler } = require('./client/middlewares/error-handler/error-handler');
 const port = process.env.PORT;
 
@@ -30,6 +31,7 @@ app.use(companyRoutes);
 app.use(categoryRoutes);
 app.use(contractRoutes);
 app.use(paymentRoutes);
+app.use(checklistRoutes);
 app.use(async (err, req, res, next) => {
 	await errorHandler(err, res);
 });
