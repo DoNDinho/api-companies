@@ -32,7 +32,7 @@ router.get(
 			logger.addContext('transaction_id', transactionId);
 			const response = await listChecklists.execute(req.params.idContract);
 			logger.info(JSON.stringify({ message: 'Checklist insertados', data: response }));
-			res.json({ checklists: response });
+			res.json({ data: { checklists: response } });
 		} catch (error) {
 			next(error);
 		}
